@@ -1,0 +1,14 @@
+services:
+  defectcollab:
+    build: .
+    container_name: defectcollab
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      - DEFECT_JWT_SECRET=${DEFECT_JWT_SECRET:-change-me-to-a-random-string}
+      - DEFECT_JWT_EXPIRE=${DEFECT_JWT_EXPIRE:-30}
+      - PORT=8080
+    volumes:
+      - ./data:/app/data        # 缺陷数据持久化
+      - ./backups:/app/backups  # 自动备份持久化
+    restart: unless-stopped
