@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>登录 · 研发缺陷协作系统</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Microsoft YaHei,sans-serif;background:#f5f7fb;
+    display:flex;align-items:center;justify-content:center;min-height:100vh;color:#1f2937}
+  .box{background:#fff;border:1px solid #e6e9f0;border-radius:14px;padding:32px;width:min(380px,92vw);
+    box-shadow:0 12px 40px rgba(15,23,42,.08)}
+  h1{font-size:18px;margin:0 0 4px}
+  .sub{font-size:13px;color:#6b7280;margin:0 0 18px}
+  .tabs{display:flex;gap:8px;margin-bottom:18px}
+  .tabs button{flex:1;padding:8px;border:1px solid #e6e9f0;background:#fff;border-radius:8px;cursor:pointer;font-size:14px;color:#6b7280}
+  .tabs button.on{background:#3b82f6;color:#fff;border-color:#3b82f6;font-weight:600}
+  label{display:block;font-size:12px;color:#6b7280;margin:10px 0 4px}
+  input,select{width:100%;padding:10px 12px;border:1px solid #e6e9f0;border-radius:8px;font-size:14px}
+  .row{display:flex;gap:8px}
+  .row>div{flex:1}
+  button.go{width:100%;margin-top:18px;padding:11px;border:none;border-radius:8px;background:#3b82f6;color:#fff;
+    font-size:15px;font-weight:600;cursor:pointer}
+  .hint{color:#ef4444;font-size:12px;margin-top:10px;min-height:16px}
+  .ok{color:#10b981}
+  .tip{font-size:12px;color:#9ca3af;margin-top:14px;line-height:1.6}
+  code{background:#f1f5f9;padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>🐞 研发缺陷协作系统</h1>
+  <p class="sub">多人协作 · 三角色状态机 · 实时同步</p>
+  <div class="tabs">
+    <button id="tLogin" class="on" onclick="switchTab('login')">登录</button>
+    <button id="tReg" onclick="switchTab('reg')">注册</button>
+  </div>
+
+  <div id="login">
+    <label>用户名</label><input id="lUser" placeholder="admin" autofocus/>
+    <label>密码</label><input id="lPw" type="password" placeholder="••••••"/>
+    <button class="go" onclick="doLogin()">进入系统</button>
+  </div>
+
+  <div id="reg" style="display:none">
+    <label>用户名</label><input id="rUser" placeholder="英文/数字，≥2位"/>
+    <label>密码</label><input id="rPw" type="password" placeholder="≥4位"/>
+    <label>昵称（留痕显示名）</label><input id="rName" placeholder="如 测试-小美"/>
+    <label>我的角色</label>
+    <select id="rRole"><option>测试</option><option>产品</option><option>开发</option></select>
+    <div class="row">
+      <div><label>工作区邀请码（可空）</label><input id="rCode" placeholder="如 DEMO，空则自建"/></div>
+      <div><label>或新建工作区名</label><input id="rWs" placeholder="如 我的团队"/></div>
+    </div>
+    <button class="go" onclick="doReg()">注册并进入</button>
+  </div>
+
+  <div class="hint" id="hint"></div>
+  <div class="tip">内置演示账号：<code>admin / admin123</code>（工作区邀请码 <code>DEMO</code>）<br/>
+  注册时填邀请码可加入他人团队；留空则自动创建独立工作区。</div>
+</div>
+
+<script>
+const API="";
+async function call(path,body){
+  const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.detail||'错误');
+  return j;
+}
+function switchTab(t){
+  document.getElementById('tLogin').classList.toggle('on',t==='login');
+  document.getElementById('tReg').classList.toggle('on',t==='reg');
+  document.getElementById('login').style.display=t==='login'?'block':'none';
+  document.getElementById('reg').style.display=t==='reg'?'block':'none';
+}
+function go(token){
+  localStorage.setItem('defect_token',token);
+  location.href='/';
+}
+async function doLogin(){
+  const h=document.getElementById('hint');h.textContent='';
+  try{
+    const j=await call('/api/auth/login',{username:lUser.value.trim(),password:lPw.value});
+    go(j.token);
+  }catch(e){h.textContent=e.message;}
+}
+async function doReg(){
+  const h=document.getElementById('hint');h.textContent='';
+  try{
+    const j=await call('/api/auth/register',{
+      username:rUser.value.trim(),password:rPw.value,
+      display_name:rName.value.trim()||undefined,
+      role:rRole.value,
+      workspace_code:rCode.value.trim()?rCode.value.trim().toUpperCase():undefined,
+      workspace_name:rWs.value.trim()||undefined
+    });
+    go(j.token);
+  }catch(e){h.textContent=e.message;}
+}
+document.getElementById('lPw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+document.getElementById('rPw').addEventListener('keydown',e=>{if(e.key==='Enter')doReg()});
+</script>
+</body>
+</html>

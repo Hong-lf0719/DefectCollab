@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="UoOfxKjQBwMr1CHJxFBP9a">
+<head data-page-node-id="VkcQMinRenBr2Fqt36X2FG">
+<meta charset="utf-8" data-page-node-id="km4GSbY01eleoAoGLqELvT"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="yq8AkWfUXHXqeCRqq1u9Wo"/>
+<title>研发缺陷协作系统</title>
+<link rel="stylesheet" href="/style.css" data-page-node-id="uTCvwfQ5G7clPWBuAvinJF"/>
+</head>
+<body data-page-node-id="C3CkZMBz9IrgsDDAkhrRGu">
+<header data-page-node-id="1xErs819E5YpAu33Ym9X8w">
+  <h1 data-page-node-id="k36FnKblWDx1x8heHPsj9v">🐞 研发缺陷协作系统</h1>
+  <div class="live" data-page-node-id="HvRoNn4oloZ1vTPtNlTWXB"><span class="dot" id="liveDot" data-page-node-id="zNHLzrB4sWsV2CObq4cdHs"></span><span id="liveTxt" data-page-node-id="W7PmdUlKf8xYd96JE2CgXE">实时已开启</span></div>
+  <div class="rolebar" data-page-node-id="qoqrklNPoZWdZBX74NRr0I">
+    <span id="userChip" style="background:#eef2ff;color:#3730a3;padding:4px 10px;border-radius:8px;font-size:13px" data-page-node-id="9onSEDNcXiN2g3rMlaLNvT">连接中…</span>
+    <button class="act ghost" id="btnNotify" style="background:#1e293b;color:#fff" title="开启后，他人推进缺陷时弹系统通知" data-page-node-id="XqTkXQo89LrSCG919IJVzd">🔔 提醒</button>
+    <button class="act" id="btnNew" style="background:var(--green)" data-page-node-id="03ePD3BAC22DMennUhh6C0">＋ 新建缺陷</button>
+    <button class="act ghost" id="toggleLive" style="background:#1e293b;color:#fff" data-page-node-id="ePcx054u0u2MmEcBMBzhkR">暂停</button>
+    <button class="act ghost" id="btnLogout" style="background:#64748b;color:#fff" data-page-node-id="wnusxcSAknzw06ut5ylUJH">退出</button>
+    <!-- 身份由登录态决定，原选择器隐藏保留以兼容脚本 -->
+    <select id="role" style="display:none" data-page-node-id="in3C1wDvMoUHKwGEjFOUPE"><option data-page-node-id="2PPk9Swi49kaINGygEeSoe">测试</option><option data-page-node-id="4xPwa2W4pGw6TMINCzRNq6">产品</option><option data-page-node-id="6zlUIx1XA1nOGOxO4AcXSc">开发</option></select>
+    <input id="who" style="display:none" data-page-node-id="gybWuerGEbDC0hhUAmC9Q6"/>
+  </div>
+</header>
+
+<nav data-page-node-id="te5B6UcpDe9bA6iFGiuDEq">
+  <button data-tab="dash" class="active" data-page-node-id="kjyvsrDpgWTpJalTXiF8kQ">共同进度</button>
+  <button data-tab="list" data-page-node-id="6TE5YvKGr0WT7HQryqnMSp">缺陷列表</button>
+  <button data-tab="mine" data-page-node-id="rcLtB0cQdoJ2dH8Jb8w7rE">我的待办</button>
+  <button data-tab="diagram" data-page-node-id="ecbMQWDiTea64U276a6Glt">状态机说明</button>
+  <button data-tab="idea" data-page-node-id="9FAD7s83z48QCMMm6AgUGY">设计思路</button>
+</nav>
+
+<div class="wrap" data-page-node-id="StfDudK15INJxHuLIbA4eX">
+  <!-- 共同进度 -->
+  <section id="tab-dash" class="grid" data-page-node-id="rFJQALfQnZlC3LBLIQwyQ8">
+    <div class="g4" data-page-node-id="XICtJXGlY6GMJh8zAcby5T">
+      <div class="card kpi" data-page-node-id="ZL5spzkHDdBMicnjVrgP8v"><div class="n" id="kTotal" data-page-node-id="Mx4urFmQHdY8CHrIBsexKe">-</div><div class="l" data-page-node-id="gTI8WJ5EHwUcc8DRq3afQw">缺陷总数</div></div>
+      <div class="card kpi" data-page-node-id="0pyyvRoNvlutuyxaS4Dkuf"><div class="n" id="kOpen" style="color:var(--blue)" data-page-node-id="4pF7FAdmyxGkTXiamO0GkD">-</div><div class="l" data-page-node-id="YFKALRFbl7LbD5k4xNhIgb">未关闭</div></div>
+      <div class="card kpi" data-page-node-id="qj7f5d32Se62LDEqWDb8by"><div class="n" id="kClosed" style="color:var(--green)" data-page-node-id="nZP7ldcM8D92TaQm8352s0">-</div><div class="l" data-page-node-id="4PwryEz8wSxpY2lOulRCWg">已关闭</div></div>
+      <div class="card kpi" data-page-node-id="07AhSKfBTzEjqkcrLde7C8"><div class="n" id="kRisk" style="color:var(--red)" data-page-node-id="IuZHPBA8AnipKzxCVqGDRV">-</div><div class="l" data-page-node-id="rEuGEEJEWuYD74IxVpuNVV">风险预警</div></div>
+    </div>
+    <div class="g3" id="roleCards" data-page-node-id="Q2E7cUyfseWNDcpdhp40qn"></div>
+    <div class="g3" data-page-node-id="AtEBCh7DmWfMtLvnroZRGm">
+      <div class="card" data-page-node-id="SVxUy8rjyV6AAHngIl5vp1"><h2 data-page-node-id="rnWfET6tNDVfbryry4yLgu">按状态</h2><div id="byStatus" data-page-node-id="L4hUCV3GNRkKJ2vAh2p0HI"></div></div>
+      <div class="card" data-page-node-id="NQWuAmpkeOESu4gyVHe5Bm"><h2 data-page-node-id="4abahHsJ5517ofeJoWlQSG">按优先级</h2><div id="byPri" data-page-node-id="bcgOfM9KHUdXeQbDTl4FxT"></div></div>
+      <div class="card" data-page-node-id="4RpCCs7JZXGrnllwZFKehN"><h2 data-page-node-id="tO6giZxAYgg59MFGpVsfUi">按处理人</h2><div id="byAssignee" data-page-node-id="OQOAJ9oUpz52mD1f0pdGof"></div></div>
+    </div>
+    <div class="g2" data-page-node-id="eZw83mdkECy4rLl8FkeIc2">
+      <div class="card" data-page-node-id="s8SHGPnDpStQMMjwDbf3m1"><h2 data-page-node-id="Ag6veO9QLdOanvUT1Yf6lS">🛡 保底机制 · 风险预警</h2><div id="riskList" data-page-node-id="swm9uUYwsg4X6CcBDt5AZR"></div></div>
+      <div class="card" data-page-node-id="ezcCKNiK5LAIAZASWlUgTF"><h2 data-page-node-id="3Uxrz6rPuP2PVnoQVCkwB7">⚡ 实时监控 · 活动流</h2><div class="feed" id="feed" data-page-node-id="hbzbAN6QNkrSIdJkFgPfsz"></div></div>
+    </div>
+  </section>
+
+  <!-- 缺陷列表 -->
+  <section id="tab-list" class="grid" style="display:none" data-page-node-id="0qsEGJtYBupnLqf808CIZ1">
+    <div class="card" data-page-node-id="qT5v6LXxc8kvzoCXi5YU7P">
+      <div class="filter" data-page-node-id="2HLqs7oaQgOi85frUzZMMt">
+        <div class="f" style="flex:2" data-page-node-id="3Zj1VY02KxVqoGi6wXlQlI"><label data-page-node-id="5YDBPKD9fswZ1a8uM2cp9W">搜索</label><input id="fSearch" placeholder="关键词：标题/描述/处理人/报告人" data-page-node-id="xl4WqLyHOnRKNcGIj3U6fw"/></div>
+        <div class="f" data-page-node-id="4OfvhBKWNFOuU4LQg3a55j"><label data-page-node-id="vihCfw1khXIhJTdqLitZfG">状态</label><select id="fStatus" data-page-node-id="a5iLiGQBRmdXrGzixRiAlc"><option value="" data-page-node-id="tbYucyvysMhF9sVFoC6ykt">全部</option></select></div>
+        <div class="f" data-page-node-id="xGv4KBedDZeN3hLnDKxx9v"><label data-page-node-id="MfkEVwPOwkOgdHxsbk2Ruq">优先级</label><select id="fPri" data-page-node-id="6QrocKl9nEu9WazRcIATCJ"><option value="" data-page-node-id="vpRHJfdhI4bRaoyXbrIs4U">全部</option></select></div>
+        <div class="f" data-page-node-id="QwfOvOxparFROWx5cqjGLo"><label data-page-node-id="1oiFPT0q6D0VfbFc8F7sbH">项目</label><select id="fProj" data-page-node-id="JpAKFXSvKDPMxCqMRZOfnq"><option value="" data-page-node-id="yDYgG027OAkt3V49zmauBS">全部</option></select></div>
+        <div class="f" data-page-node-id="xXEBeMYNn7fYw23JXizEt5"><label data-page-node-id="rNCiRJZVUnuZZoyIH8Exqn">处理人</label><input id="fAssignee" placeholder="模糊匹配，可空" data-page-node-id="np64oUnPOxuPi3iXADUuro"/></div>
+        <div class="f" style="flex:0" data-page-node-id="eUMnyCtWTxZCgTUSMvCUNb"><label data-page-node-id="ckr6y4ZByY2LSqgS2sy6W2">&nbsp;</label><label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--red)" data-page-node-id="BLAkpXlVaDd2q9WYvYiBgD"><input type="checkbox" id="fRisk" data-page-node-id="vI59EMaGb59s3gXrjUw6PO"/> 仅看风险</label></div>
+        <div class="f" style="flex:0" data-page-node-id="iHwyH7WnFBWALaNl03dhDh"><label data-page-node-id="vAw1l3D4Jfa3oObZkMDzqO">&nbsp;</label><button class="act ghost" id="refresh" data-page-node-id="tpyCHPpQj0NimR3ZTgjXYC">刷新</button></div>
+        <div class="f" style="flex:0" data-page-node-id="f801BFDUI2oKDyDGhXLySV"><label data-page-node-id="aYtwD1dT0jTF3Y4UYxb9XP">&nbsp;</label><button class="act" id="btnExport" style="background:var(--blue)" data-page-node-id="h8H5xYE67ixYDDaeoygNco">⬇ 导出CSV</button></div>
+      </div>
+      <div id="list" data-page-node-id="wWBhSd0mPWhBfEzgJDbBo7"></div>
+      <div id="pager" style="display:flex;gap:8px;align-items:center;justify-content:center;margin-top:12px" data-page-node-id="crouniXAAuLd4l1C4hw5zg"></div>
+    </div>
+  </section>
+
+  <!-- 我的待办 -->
+  <section id="tab-mine" class="grid" style="display:none" data-page-node-id="HcDx0qGpC42dmsMO87hykV">
+    <div class="card" data-page-node-id="AL1hZmIkfVGfsZ4iOcOCGn">
+      <h2 id="mineTitle" data-page-node-id="sQpgJhtnNX0rsCOqULkadt">我的待办</h2>
+      <div id="mine" data-page-node-id="vg71xqJRr6hhSyk8JEa64h"></div>
+    </div>
+  </section>
+
+  <!-- 状态机说明 -->
+  <section id="tab-diagram" class="grid" style="display:none" data-page-node-id="c1qaKQrSByToPpOvmhMdv8">
+    <div class="card" data-page-node-id="iLE9wechjypBBFWCMTBpwE"><h2 data-page-node-id="KP20b1fxGtZK12Lijop2r1">状态机流转图</h2><div class="svgwrap" id="diagram" data-page-node-id="rw40b4Uso96p7vTncMzt1M"></div></div>
+    <div class="card" data-page-node-id="0WMcRNxx3DPi13ZNzBvRLI"><h2 data-page-node-id="9N15gYcMiXHUlKps46Jutb">三角色具体分工</h2><div id="respList" data-page-node-id="HKftil38l6U7aYflZsgstC"></div></div>
+    <div class="card ok" style="border-left:3px solid var(--green)" data-page-node-id="FKYM8G0sP2TMPKYjSavEub"><h2 data-page-node-id="Gb5WxtJ929dBPafBaHZcV7">设计要点</h2>
+      <ul class="note" data-page-node-id="EZTnWVZ57MDBZklZyGRkuk">
+        <li data-page-node-id="7fKzH9VSWkqrysiC7WZ24J"><b data-page-node-id="P6XFZsR4psNAlEfEG20fJ7">三角色分工清晰</b>：测试负责质量门禁（复测/关闭/重开）、跟踪质量与回归；产品负责决策（确认/拒绝/优先级/指派）；开发负责修复（认领/修复/阻塞）。<b data-page-node-id="luZ4HWkLoMfbxlcCDsCyhF">三方均可登记缺陷</b>（测试为主提交方）。</li>
+        <li data-page-node-id="S1aOCVq7pzas35kCGiRVpz"><b data-page-node-id="poHFaWlnLn4atdPe3faznL">权限控制到字段</b>：优先级/严重程度/指派仅产品可改，阻塞仅开发可标，关闭/重开仅测试——后端 <code data-page-node-id="fy28qZ2TtWumLtctA8wv1G">can_edit_field</code>/<code data-page-node-id="ffMTXkfR8bBpJE7WcgONGZ">can_transition</code> 双重校验。</li>
+        <li data-page-node-id="u0595LOKUcCfj3Bxmut6VZ"><b data-page-node-id="PnKXpykjPSFnfVb7TiIFAt">共同进度</b>：仪表盘聚合状态/优先级/处理人分布 + 三角色各自的待办队列，三方看同一份事实。</li>
+        <li data-page-node-id="8NaI3eLZrxmBC1d4MbGf5G"><b data-page-node-id="n0xWm0F7kyhMD6936AmMia">实时监控</b>：活动流每 <span id="cfgSec" data-page-node-id="ECYiU7YDL3q4Hae3WI4KWZ">5</span>s 轮询刷新，状态变更即时可见。</li>
+        <li data-page-node-id="GFFOAVqaQwB0OYJRBuBsGr"><b data-page-node-id="8yFeJfR50Yrwq6LXItd5UR">可追溯</b>：每次状态流转/字段变更/评论/系统告警都写 history（谁·角色·时间·前后值）。</li>
+        <li data-page-node-id="SKMi5yjeVdQgRCP7K3d1GS"><b data-page-node-id="U7LCYkqtVv3LNqXQSU95JM">可拓展</b>：角色/状态/流转/阈值全在 <code data-page-node-id="6g69UVcmQ7uwchoP2GCOt2">state_machine.py</code>，前端按 <code data-page-node-id="4DLygsrALFoSgbbrBRki6W">/api/meta</code> 渲染，新增状态只改一处。</li>
+        <li data-page-node-id="3miC5ZtxN0zU2MTSKVklnn"><b data-page-node-id="eBC4lYAx6M7AQap6bWT2q8">保底机制</b>：SLA 超时（验证48h/修复72h）、重开超上限、已确认未指派、开发阻塞——自动计算并预警，首次触发写入时间线，避免缺陷“石沉大海”。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 设计思路 -->
+  <section id="tab-idea" class="grid" style="display:none" data-page-node-id="sXFkBqpkwYN0tx427IpHJS">
+    <div class="card" data-page-node-id="VAqi7ufcmYitjrehevPhvL">
+      <h2 data-page-node-id="2oqd8419gk9DvcdsgRd1ki">① 我做这个系统，是要解决什么</h2>
+      <div class="idea" data-page-node-id="2AdUy12AcYTimBxYRS1jIn"><p data-page-node-id="9TQ7Yof9PHMRPFXoBulott">缺陷管理最容易坏在<b data-page-node-id="Ye0qtXWQbrxnvANQ9xofoe">「不是没人管，而是没人知道该谁管」</b>。我把真实协作里最常见的四个坑作为设计目标——每一条都对应下面一个机制，而不是先做页面再想功能。</p></div>
+      <div class="idea" data-page-node-id="c7ifUcrsgi9wxKugIRbpRH"><h3 data-page-node-id="5VSDLwSvwBKBCSw6bBdPFE"><span class="num" data-page-node-id="wzt1nAD5zFU5xhjvQOPAT4">1</span>缺陷石沉大海</h3><p data-page-node-id="MPtsfkmoVGWETOnC8FQJEV"><span class="bad" data-page-node-id="GyHUbHHZAe4A2lKLFZr5kO">现象：</span>提了没人跟，几天后才发现还躺在那。<span class="good" data-page-node-id="y8uCgQwdLTgUxtRVeYkLaG">对应机制：</span><b data-page-node-id="PEbwx5126EBoyzMSxF5aGO">SLA 保底预警</b>——超时自动算风险并置顶，不等人想起来。</p></div>
+      <div class="idea" data-page-node-id="XQqHKXtfJN4Dped3nMwbYe"><h3 data-page-node-id="h2q1neyPnDNcPnWDJyZPBU"><span class="num" data-page-node-id="YN44THUQ0ZscMIGbpBpXFL">2</span>责任边界模糊</h3><p data-page-node-id="oz7aSyGobk6oABf5aGyUwp"><span class="bad" data-page-node-id="wdCLQHjE57FwMimRsxGsex">现象：</span>「这不是我的问题」扯皮。<span class="good" data-page-node-id="A5EI2rbxpnNlGn2RtNfyZq">对应机制：</span><b data-page-node-id="6ElYmWBNgmYQjb0WKtM9j2">三角色 + 状态机白名单</b>——每个状态下「谁能做什么」写死在服务端，扯不动。</p></div>
+      <div class="idea" data-page-node-id="DK6qv5nhAzCAXXcHjj0RZB"><h3 data-page-node-id="P5ufJGJGqdQx2PgVc70R07"><span class="num" data-page-node-id="2hAtFZxP5th5p65mll9sC2">3</span>信息散在聊天里</h3><p data-page-node-id="Yv7FuYS0Yc6nHU2HyZgiVt"><span class="bad" data-page-node-id="HW6GK4wKYV6k5tGVz9Gn93">现象：</span>群里口头对齐，事后查不到。<span class="good" data-page-node-id="CJc4KGx0pKYo2o9uYvWoTn">对应机制：</span><b data-page-node-id="jJotIzxympVM0YC803y3Hn">单一事实源 + 评论留痕</b>——所有沟通沉淀在缺陷本身，换人接手也能看懂。</p></div>
+      <div class="idea" data-page-node-id="0SE3MFDH53n0QG8Yd7TnRa"><h3 data-page-node-id="J52cgkilzGQ9inFekKdjtu"><span class="num" data-page-node-id="uq5hJ5xfXGyECcjFWjBgWp">4</span>改了什么无从追溯</h3><p data-page-node-id="jb4K38p8SjHytRaSzZCuEB"><span class="bad" data-page-node-id="rlS0ldTfk1STVciGrI3QOl">现象：</span>优先级悄悄被改，不知道是谁。<span class="good" data-page-node-id="aJWP228eSJSIPy8FvWuqXX">对应机制：</span><b data-page-node-id="woh42nHVM5F0nlEHUNo0il">字段级变更审计</b>——谁、什么角色、什么时候、从什么改成什么，全记。</p></div>
+    </div>
+
+    <div class="card" data-page-node-id="SzJqsDsZNzTKaiBcL9LcVJ">
+      <h2 data-page-node-id="az4y0DwSYQUQGq0L3h70Af">② 四条设计原则（所有功能都从这四条推出来）</h2>
+      <div class="idea" style="border-left-color:var(--green)" data-page-node-id="JpxaJpEGF6THaz61FzmgnU"><h3 data-page-node-id="oj3RmyK29hUagFTG7cUV7P"><span class="num" style="background:var(--green)" data-page-node-id="kuGTifjAZ15eo53iyf51b1">原</span>状态机驱动，而不是「状态随便下拉」</h3><p data-page-node-id="dgWqH6UJv2fTtUrGp7HxG3">状态不是一个可自由填写的字段，而是一个<b data-page-node-id="dJiRT1DgQqMY6A71E9tTZr">有向图</b>：7 个状态、7 条合法流转，每条流转绑定唯一角色。前端看到的按钮是服务端算出来的，前端就算被篡改，后端 <code data-page-node-id="T2MEbrGOb8jUUdLfpNcQxh">can_transition</code> 也会拦。<b data-page-node-id="TDK5HhGek13WsOLsw5E9gj">权限判断永远在服务端，前端只负责渲染。</b></p></div>
+      <div class="idea" style="border-left-color:var(--green)" data-page-node-id="mxvySOXFGf6H2gOZwhli0Q"><h3 data-page-node-id="TaPEG8vCxSUHEAzGxVmwRl"><span class="num" style="background:var(--green)" data-page-node-id="s3RDZmq3JKmp0F4wfh836t">原</span>权限控制到字段，不只到页面</h3><p data-page-node-id="hG0FcbFAEioERkSRVvDFiu">很多系统做到「这个页面谁能进」就停了。我这里下沉一层：<b data-page-node-id="jhxvtYBwupwBxICLScgUc0">同一个抽屉里，产品能改优先级、开发只能标阻塞</b>。粒度到字段，才真正贴近分工。</p></div>
+      <div class="idea" style="border-left-color:var(--green)" data-page-node-id="Mlfb84WSzH2F6TkSFd4cB3"><h3 data-page-node-id="Q4lfdKm5YujXpTQrTlcjNr"><span class="num" style="background:var(--green)" data-page-node-id="Qc1fvh9NvYzMdnkXKWVe9H">原</span>规则集中声明，而非散落 if-else</h3><p data-page-node-id="2evAfJdFWC7KExKvEPCFvM">状态、流转、角色、字段权限、SLA 阈值<b data-page-node-id="HfU6T3AlA21d8DGgZPh6j7">全部声明在 <code data-page-node-id="rPvN8lzuU8m62MZH97PaV9">state_machine.py</code> 一处</b>，前端通过 <code data-page-node-id="QCVZhZBTHWYlZ13LFEvx5F">/api/meta</code> 动态渲染。加一个状态只改一个字典，不用碰前端和业务代码。下面的权限矩阵就是<b data-page-node-id="Rrbuge6g0MjMCkh4hvCdI6">从后端实时读出来渲染的</b>，不是我手写的死表格。</p></div>
+      <div class="idea" style="border-left-color:var(--green)" data-page-node-id="BwPUhOSmigt24O34wFi6VK"><h3 data-page-node-id="bPzFvQX3i19ETDIxqCBl9E"><span class="num" style="background:var(--green)" data-page-node-id="SFn6KtbWWwCmdOnRgdnEnf">原</span>系统要主动兜底，不能只当记录本</h3><p data-page-node-id="TnLl95mrKKMU0TUhZ4okv0">被动记录没有价值。<b data-page-node-id="LlgnBxFudaGaiMlOXGHGPS">保底机制</b>让系统自己发现问题：已确认却没人认领、修复超时、复测超时、反复重开——四种信号自动算成风险，在共同进度页置顶预警；首次触发还会以「保底机制」名义写进缺陷时间线，事后可查。</p></div>
+    </div>
+
+    <div class="card" data-page-node-id="ndB3n0Ow3IZMoWsMgeCPFr">
+      <h2 data-page-node-id="VgaTlwdFzGbCsYTyZIVt0U">③ 权限矩阵（由后端 /api/meta 实时渲染）</h2>
+      <p class="resp" data-page-node-id="IE9xN0W0agfaPnpo2bAJ97">下表不是我手写死的，是从 <code data-page-node-id="vP6R7W094BIZUCASPqDrGZ">state_machine.py</code> 的声明读出来渲染的。改一行 Python，这里立刻变。</p>
+      <div id="mxField" data-page-node-id="HXT2LkmuAMfq9gMqUbacuu"></div>
+      <div id="mxAction" style="margin-top:14px" data-page-node-id="0KEh7IUBRKAq1DGTvzCgWi"></div>
+    </div>
+
+    <div class="card" data-page-node-id="VRLvN9nvWbhn8FbwuNneHE">
+      <h2 data-page-node-id="c6kIdJb0VveNkCuhAqT9Ju">④ 保底机制：让缺陷不会石沉大海</h2>
+      <div class="idea" style="border-left-color:var(--red)" data-page-node-id="AZYIO2yYOYJFxFDU2R6eCJ"><h3 data-page-node-id="dVXmj8Vi5R0ZxwN9ZjNOfF"><span class="num" style="background:var(--red)" data-page-node-id="DTzAhOgdYpkLccYm2DIFBI">险</span>四种风险信号</h3><p data-page-node-id="VE6vr1htriDZqvcrn3CeuS">
+        ① <b data-page-node-id="vXoFFHsWCejkgjqzc12G6l">已确认但未指派</b>——产品确认了却没人认领，最容易漏；<br data-page-node-id="MGSVbEYfYuRqmVifL98VSJ"/>
+        ② <b data-page-node-id="zw2IOOaFaUGbYMU23tceST">修复超时</b>——修复中/重新打开超过 <span id="cfgFix" data-page-node-id="7U2EeBDO1GHkMYh2BQySjG">-</span> 小时未推进；<br data-page-node-id="x9EjwrMRECdrWMU1VN8g7r"/>
+        ③ <b data-page-node-id="ZGuab4DEThX9GbRgnQNIoI">验证超时</b>——待验证超过 <span id="cfgVerify" data-page-node-id="r6t7PNjwAUwh6m6EufFd1s">-</span> 小时未复测；<br data-page-node-id="UW0dfbmgnHML7r37FpAa4c"/>
+        ④ <b data-page-node-id="szJJaNn19U7JKcZIBtHTNz">反复重开</b>——重开次数达 <span id="cfgReopen" data-page-node-id="OkW86H1eSbuoRnchWtxCnJ">-</span> 次，说明修复质量或需求理解有问题，需要升级处理。<br data-page-node-id="CH3yp5PWcwSDB4mn2AER97"/>
+        另：<b data-page-node-id="MPA6h5aWJKxhtGa67mSzEo">开发标记阻塞</b>会立即进入预警，因为「卡住了」比「慢了」更需要被看见。</p></div>
+      <div class="idea" style="border-left-color:var(--purple)" data-page-node-id="nzyctrSLu9fOBmEtHE3gDU"><h3 data-page-node-id="jTl909WKaCbdzFT7kHWkze"><span class="num" style="background:var(--purple)" data-page-node-id="aHHdBOGTJbeUZXyBoCTPAe">阈</span>阈值可配置</h3><p data-page-node-id="gF9KBgXJbm7Ep9C1e7EdKi">所有阈值集中在 <code data-page-node-id="Xs3oR0j3bvlpR6emFnwAz8">CONFIG</code>：<span id="cfgChips" class="kv" data-page-node-id="cgtxiJYboJEoMqUpj9m9af"></span></p></div>
+    </div>
+
+    <div class="card" data-page-node-id="S0HwUHAFlH87WpeywTozYB">
+      <h2 data-page-node-id="0egrKAvOcXuMl5ClyLhsJ3">⑤ 工程上的取舍（为什么这么做）</h2>
+      <div class="idea" style="border-left-color:var(--orange)" data-page-node-id="mUwF0dBJA9v2JdJstMPoRD"><h3 data-page-node-id="1TJcSfF5kUHkX0SMdFAXTq"><span class="num" style="background:var(--orange)" data-page-node-id="aQzOFMCcYkbzH4BciI8phf">取</span>SQLite + FastAPI，不上重中间件</h3><p data-page-node-id="QSo3yNEdt8uvAY7smJ6AN3">缺陷协作是<b data-page-node-id="QKdm7yurDSmFBcjWHDrM5s">中等写入量、强一致性</b>场景，SQLite 完全够用，换来的是零运维、单文件可迁移。需要换 PostgreSQL 时，只改数据访问层。</p></div>
+      <div class="idea" style="border-left-color:var(--orange)" data-page-node-id="LnlC2aauGBRlMsoXMh8HpB"><h3 data-page-node-id="wzP7XuClgtZQUemKMHHkXb"><span class="num" style="background:var(--orange)" data-page-node-id="FdYAqRJd5v4rBAYUlZ4PLa">取</span>前端零依赖原生 JS，独立文件组织</h3><p data-page-node-id="u3yf5hDgyDqQPoJH8sK9p6">不引 React/Vue。页面交互复杂度（列表+抽屉+图表）撑得起原生实现，换来<b data-page-node-id="RLFot3fkWukABHU4EyF7Uq">秒开、无构建、可直接部署</b>。结构上 HTML / CSS / JS 分离（style.css / app.js），是标准的独立网站前端工程。这是「够用就好」的取舍，不是不会用框架。</p></div>
+      <div class="idea" style="border-left-color:var(--orange)" data-page-node-id="EoLsJmPCQVWk75C2gbaEGW"><h3 data-page-node-id="M2HPceF2HKbcauwQ6c18RH"><span class="num" style="background:var(--orange)" data-page-node-id="xv2BPHDRRFXRYNNvnpFbJp">取</span>Meta 驱动渲染</h3><p data-page-node-id="mxgymnSycQDRGIeCzWwMtL">前端启动先拉 <code data-page-node-id="HVcEhNOFNUfAX4LlWv9Jya">/api/meta</code>，用后端声明渲染状态筛选、优先级下拉、状态机图、角色分工、权限矩阵。<b data-page-node-id="ipl9vEjbhuDKryyd8WJkCc">规则和展示不重复定义</b>，避免两处不一致的经典 bug。</p></div>
+      <div class="idea" style="border-left-color:var(--orange)" data-page-node-id="SWllKVDYbAKn3e4vTgJN97"><h3 data-page-node-id="Y9H5VRBXbbA6cTNzNS1UK4"><span class="num" style="background:var(--orange)" data-page-node-id="zmsVgQBaGKaI2oJjQGjMaB">取</span>实时监控用 WebSocket 推送（轮询兜底）</h3><p data-page-node-id="EG8bEd2kb1NO9MM1IMO9zl">缺陷变更后服务端经 <code data-page-node-id="MVL867VEwRlzeD5Bo2GIZB">/ws</code> 主动广播，前端即时刷新；连接断开时自动回退 <span id="cfgSec2" data-page-node-id="D4R5asQbocEHzcfxOcnKyr">5</span> 秒轮询，保证弱网下也不丢更新。比纯轮询更省流量、更接近真实协作。</p></div>
+    </div>
+
+    <div class="card" data-page-node-id="loSiP3xPCRHGYpznVYDMrp">
+      <h2 data-page-node-id="HeYeALFFDyAFdWLehHWGjL">⑥ 已做什么，没做什么（诚实边界）</h2>
+      <div class="road" data-page-node-id="YLUZA2Bv1aa0s2sZuE7JfW">
+        <p data-page-node-id="j3XDlGK0TCOZkRNjVpIhAS"><b data-page-node-id="03sA2PU9J0VDTlGEKhXenQ">已完成：</b><span class="done" data-page-node-id="HJKDviPZYJbqxEHXHa6sFd">✔</span> 真实账号体系（注册/登录/JWT，密码 pbkdf2 哈希）｜ <span class="done" data-page-node-id="tDEvunhGUdsBi59GYDt1YG">✔</span> 工作区(团队)隔离（邀请码加入/自建）｜ <span class="done" data-page-node-id="NxumK9XoJKSeDygNRWZVHM">✔</span> 三角色权限模型 ｜ <span class="done" data-page-node-id="6te0RWwgmYiAr4EGPxFGNY">✔</span> 7 状态机与流转校验 ｜ <span class="done" data-page-node-id="miA6eGs2bDqmAQnlySfAUd">✔</span> 字段级权限 ｜ <span class="done" data-page-node-id="IbZjm5EF3vqROsXBhXtz0K">✔</span> 全流程审计留痕（含系统保底告警） ｜ <span class="done" data-page-node-id="RGpMYMaHPGf87WE0zNNpvn">✔</span> SLA 风险预警 ｜ <span class="done" data-page-node-id="pH1NWMWbWpUjdC0h5NAAg0">✔</span> 共同进度仪表盘（含三角色队列/平均解决时长） ｜ <span class="done" data-page-node-id="4UXYjSLjtVLo1EZQyhiAqc">✔</span> WebSocket 实时推送（轮询兜底）｜ <span class="done" data-page-node-id="VMmbqME9lus3AZeUFaCqbY">✔</span> 实时监控活动流 ｜ <span class="done" data-page-node-id="sEhv4OaT7IqaFhBw96ygmO">✔</span> 关键词搜索 ｜ <span class="done" data-page-node-id="P1x3B2zDTL4Bz75iD4kVza">✔</span> 标题/描述在线编辑 ｜ <span class="done" data-page-node-id="LM491QZGHNEzM5ACManCb1">✔</span> 开发自动认领 ｜ <span class="done" data-page-node-id="hfIUbceCC3uBr4IGe26F6L">✔</span> 产品删除归档+审计日志 ｜ <span class="done" data-page-node-id="tcv03xEAAoSBQaoU82l6hO">✔</span> CSV 导出</p>
+        <p data-page-node-id="Br09vJDLHwdl1D4TLs512j"><b data-page-node-id="gcl35GGALic0fz5R09nWAj">明确未做（有意为之，不是遗漏）：</b><span class="todo" data-page-node-id="3chQs3v2g1g5J9X7DqPMbh">○</span> 邮件/IM 通知 ｜ <span class="todo" data-page-node-id="2kYPcnWbcYsuhFvY97abKd">○</span> 附件落盘与病毒扫描（当前 base64 存库）｜ <span class="todo" data-page-node-id="UnReEu8XYs2kGFuYKLy9kd">○</span> 自定义报表导出</p>
+        <p style="color:var(--muted);font-size:12px" data-page-node-id="FXlcmBM9MsIcaGOCmqzzYG">注：真实团队使用时，权限模型已经是服务端强校验的，补上身份识别即可直接上生产。</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 详情抽屉 -->
+<div class="mask" id="mask" data-page-node-id="WvFVjjXVSu8JLBEq0VhmOT"></div>
+<div class="drawer" id="drawer" data-page-node-id="10RCjJ1sV0MDx4MRuJo73f">
+  <header data-page-node-id="sj6c1NIf34hH2oC1tylzBR"><h3 id="dTitle" data-page-node-id="DlLWdquADw81826FKfyEHR">缺陷详情</h3><button class="act ghost" id="dClose" data-page-node-id="DMJmFFcg1T7dlVWkyOsNkl">✕</button></header>
+  <div class="body" id="dBody" data-page-node-id="WGEyJDhpWfj6wlNBmj7ZGq"></div>
+</div>
+
+<!-- 新建缺陷 -->
+<div class="mask" id="newMask" data-page-node-id="mVHNfimkxTUrgSLvzBGT4o"></div>
+<div class="modal" id="newModal" data-page-node-id="Ffir02YCeTrq4CQjXhU9vD">
+  <header data-page-node-id="nafvvITs8pGQi5AerIcNmi"><h3 data-page-node-id="QBT9YJfu2Tfd8I1g9Q1RtM">➕ 新建缺陷</h3><button class="act ghost" id="newClose" data-page-node-id="29gCnHzi7HmtImrLpnt7aJ">✕</button></header>
+  <div class="body" data-page-node-id="EUd0XrVwAYyN2g0YEPZsNf">
+    <div class="row" data-page-node-id="tVKKlRsKJo3gen04HD8NoH"><label data-page-node-id="DNWH14dCLIHDqrLN235DTc">标题 *</label><input id="nTitle" placeholder="一句话描述问题" style="flex:1" data-page-node-id="2KqYJiuBvi29duDG4lwfSP"/></div>
+    <div class="row" data-page-node-id="CNz2fPWjZEFNFzt2zntLMn"><label data-page-node-id="NsOdw45SA1MH03yU0QvOL3">详细描述</label><textarea id="nDesc" rows="4" placeholder="复现步骤 / 期望 / 实际 / 环境" style="flex:1;resize:vertical"></textarea></div>
+    <div class="row" data-page-node-id="Glp8nos1zCYjjfOCGVRagN">
+      <label data-page-node-id="YAyNQU7yBYkbiAUjkkvBNa">报告人</label><input id="nReporter" placeholder="你的名字，如 测试-小美" style="flex:1" data-page-node-id="CFcayPlGh77moCLygk2Pct"/>
+    </div>
+    <div class="row" data-page-node-id="WteFrvdNh15tFM0Rd445Al">
+      <label data-page-node-id="ZVKHeYW4TacBCz3xdS3KVm">优先级</label><select id="nPri" data-page-node-id="I0kFCkP4PJPgRFLAdysKHD"></select>
+      <label data-page-node-id="UBgmzguzROnUyM7AjUYQHq">严重程度</label><select id="nSev" data-page-node-id="07gdbJWzDDLmpxPLiExT2E"></select>
+    </div>
+    <div class="row" data-page-node-id="mx30ZO6W8lpiEBurx9ZbNW"><label data-page-node-id="Gk3ES0QQI2r7WS8HOMSysA">项目</label><select id="nProj" style="flex:1" data-page-node-id="u5dcmdTpLXeogKYZpkFdS9"></select></div>
+    <div class="hint" data-page-node-id="iqQWr5VfDTkDkTQHmG0KhN">将以当前身份【<span id="newRole" data-page-node-id="WoUCHZcFuD988GQMnyXTOq">测试</span>】登记，可在「状态机说明」查看权限。</div>
+    <div class="row" style="justify-content:flex-end;margin-top:14px" data-page-node-id="uVu3bUb97QqKeS1it50LDJ">
+      <button class="act ghost" id="newCancel" data-page-node-id="3nJnkiJ5qCsP0OCteFBmfW">取消</button>
+      <button class="act" id="newSubmit" style="background:var(--green)" data-page-node-id="7Lr3SRhTKvysjaRbsO4qJ1">提交缺陷</button>
+    </div>
+  </div>
+</div>
+
+<!-- 流转确认（替代原生 prompt，可填备注留痕） -->
+<div class="mask" id="trMask" data-page-node-id="DTKDt6b4YhxQNofdYRW3vy"></div>
+<div class="modal" id="trModal" data-page-node-id="G6LfjQL0XikYgWthGvuMu7">
+  <header data-page-node-id="H8XTgDD2isOiPZ62rAeDbM"><h3 id="trTitle" data-page-node-id="NjhDG0PMg6CcXgRBDOcxXo">执行流转</h3><button class="act ghost" id="trClose" data-page-node-id="6ObbEepAhwVpAYDRj6iOhy">✕</button></header>
+  <div class="body" data-page-node-id="ioPuIAuLtjyU2MSB5H3wYI">
+    <div class="hint" id="trInfo" data-page-node-id="g5PNCeLZqEzq6mX3y4MVaC"></div>
+    <div class="row" data-page-node-id="LBOELM4ESMsrXAb1k6rqKi"><label data-page-node-id="GTe56drZD24mTOiCYwaOJB">备注</label><textarea id="trComment" rows="3" placeholder="操作备注（可选）：原因 / 修复方案 / 复测结论…（Enter 确认，Shift+Enter 换行）" style="flex:1;resize:vertical"></textarea></div>
+    <div class="row" style="justify-content:flex-end;margin-top:8px" data-page-node-id="pF3giDJER1ZS8F9hsjigJj">
+      <button class="act ghost" id="trCancel" data-page-node-id="WWvQNSFVWSHVMa5qEkcLOY">取消</button>
+      <button class="act" id="trConfirm" style="background:var(--green)" data-page-node-id="bkjYjsx6kWDx3Y0EHdNbpV">确认执行</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" data-page-node-id="cJPIHXxE8OitfrapIBuWmg"></div>
+<script src="/app.js"></script>
+</body>
+</html>
